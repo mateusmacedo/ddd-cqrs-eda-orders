@@ -197,4 +197,18 @@ class OrderTest extends TestCase
         $this->expectExceptionMessage('Order is already placed');
         $this->sut->markOrderAsPlaced();
     }
+
+    public function testCanCalculateTotalPrice(): void
+    {
+        $this->assertSame(0.0, $this->sut->calculateTotalPrice());
+        $this->sut->addProductItem($this->product);
+        $this->assertSame(10.0, $this->sut->calculateTotalPrice());
+        $this->sut->addProductItem($this->product);
+        $this->assertSame(20.0, $this->sut->calculateTotalPrice());
+        $this->sut->removeProductItem($this->product);
+        $this->assertSame(10.0, $this->sut->calculateTotalPrice());
+        $this->sut->removeProductItem($this->product);
+        $this->assertSame(0.0, $this->sut->calculateTotalPrice());
+        $this->assertNotSame(10.0, $this->sut->calculateTotalPrice());
+    }
 }
