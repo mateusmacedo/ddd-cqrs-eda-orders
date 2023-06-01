@@ -102,4 +102,14 @@ final class Order extends AggregateRoot
     {
         return $this->items->getArrayCopy();
     }
+
+    public function calculateTotalPrice(): float
+    {
+        $totalPrice = array_reduce(
+            $this->items->getArrayCopy(),
+            fn (float $total, Item $item) => $total + ($item->quantity * $item->price),
+            0.0
+        );
+        return round($totalPrice, 2);
+    }
 }
