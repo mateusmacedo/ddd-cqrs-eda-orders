@@ -17,7 +17,7 @@ final class Order extends AggregateRoot
 
     public function __construct(
         string $id,
-        public readonly ArrayObject $items,
+        protected readonly ArrayObject $items,
         public readonly string $createdAt,
         protected string $status = self::IS_INIT
     ) {
@@ -97,5 +97,10 @@ final class Order extends AggregateRoot
 
         $this->status = self::IS_PLACED;
         $this->addEvent(new OrderPlaced($this->id));
+    }
+
+    public function listProductItems(): array
+    {
+        return $this->items->getArrayCopy();
     }
 }
