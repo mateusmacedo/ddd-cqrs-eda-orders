@@ -75,6 +75,6 @@ final class ProductTest extends TestCase
         $this->assertEquals($eventData['price'], $this->productPrice);
 
         $this->assertArrayHasKey('createdAt', $eventData);
-        $this->assertEquals($eventData['createdAt'], $product->createdAt);
+        $this->assertEquals($eventData['createdAt'], $product->createdAt->format('Y-m-d H:i:s'));
     }
 }
