@@ -6,12 +6,14 @@ namespace App\Domain;
 
 use App\Domain\Events\{OrderInitialized};
 use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
+use App\Domain\Events\OrderPlaced;
 use ArrayObject;
 use Frete\Core\Domain\AggregateRoot;
 
 final class Order extends AggregateRoot
 {
     public const IS_INIT = 'init';
+    public const IS_PLACED = 'placed';
 
     public function __construct(
         string $id,
@@ -39,6 +41,11 @@ final class Order extends AggregateRoot
     public function isInitialized(): bool
     {
         return self::IS_INIT === $this->status;
+    }
+
+    public function isPlaced(): bool
+    {
+        return self::IS_PLACED === $this->status;
     }
 
     public function addProductItem(Product $product): void
@@ -76,5 +83,19 @@ final class Order extends AggregateRoot
         }
 
         $this->addEvent(new ProductItemRemovedFromOrder($this->id, ['productId' => $product->id]));
+    }
+
+    public function markOrderAsPlaced(): void
+    {
+        if ($this->isPlaced()) {
+            throw new \DomainException('Order is already placed');
+        }
+
+        if ($this->items->count() === 0) {
+            throw new \DomainException('Order must have at least one item to be placed');
+        }
+
+        $this->status = self::IS_PLACED;
+        $this->addEvent(new OrderPlaced($this->id));
     }
 }
