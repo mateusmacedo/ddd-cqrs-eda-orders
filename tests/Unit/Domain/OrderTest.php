@@ -49,7 +49,7 @@ class OrderTest extends TestCase
 
         $this->assertInstanceOf(Order::class, $order);
         $this->assertSame($this->orderId, $order->id);
-        $this->assertInstanceOf(ArrayObject::class, $order->items);
+        $this->assertSame([], $order->listProductItems());
         $this->assertNotNull($order->createdAt);
         $this->assertNotEmpty($order->getEvents());
         $this->assertTrue($order->isInitialized());
@@ -67,9 +67,9 @@ class OrderTest extends TestCase
     {
         $this->sut->addProductItem($this->product);
 
-        $this->assertNotEmpty($this->sut->items);
+        $this->assertNotEmpty($this->sut->listProductItems());
 
-        $items = $this->sut->items->getArrayCopy();
+        $items = $this->sut->listProductItems();
 
         $this->assertArrayHasKey($this->product->id, $items);
         $this->assertSame(1, $items[$this->product->id]->quantity);
@@ -89,7 +89,7 @@ class OrderTest extends TestCase
 
         $this->sut->addProductItem($this->product);
 
-        $items = $this->sut->items->getArrayCopy();
+        $items = $this->sut->listProductItems();
 
         $this->assertArrayHasKey($this->product->id, $items);
         $this->assertSame(2, $items[$this->product->id]->quantity);
@@ -118,13 +118,13 @@ class OrderTest extends TestCase
 
         $this->sut->removeProductItem($this->product);
 
-        $items = $this->sut->items->getArrayCopy();
+        $items = $this->sut->listProductItems();
         $this->assertArrayHasKey($this->product->id, $items);
         $this->assertSame(1, $items[$this->product->id]->quantity);
 
         $this->sut->removeProductItem($this->product);
 
-        $items = $this->sut->items->getArrayCopy();
+        $items = $this->sut->listProductItems();
         $this->assertArrayNotHasKey($this->product->id, $items);
 
         $events = $this->sut->getEvents();
