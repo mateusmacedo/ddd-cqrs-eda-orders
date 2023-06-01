@@ -49,17 +49,6 @@ class OrderTest extends TestCase
         $this->assertSame($this->orderId, $order->id);
         $this->assertInstanceOf(ArrayObject::class, $order->items);
         $this->assertNotNull($order->createdAt);
-        $this->assertTrue($order->isInitialized());
-    }
-
-    public function testOrderInitializedEventIsAdded(): void
-    {
-        $order = Order::init($this->orderId);
-
-        $this->assertInstanceOf(Order::class, $order);
-        $this->assertSame($this->orderId, $order->id);
-        $this->assertInstanceOf(ArrayObject::class, $order->items);
-        $this->assertNotNull($order->createdAt);
         $this->assertNotEmpty($order->getEvents());
         $this->assertTrue($order->isInitialized());
 
