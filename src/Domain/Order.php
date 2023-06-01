@@ -8,6 +8,7 @@ use App\Domain\Events\{OrderInitialized};
 use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use App\Domain\Events\OrderPlaced;
 use ArrayObject;
+use DateTimeImmutable;
 use Frete\Core\Domain\AggregateRoot;
 
 final class Order extends AggregateRoot
@@ -17,18 +18,16 @@ final class Order extends AggregateRoot
 
     public function __construct(
         string $id,
-        protected readonly ArrayObject $items,
-        public readonly string $createdAt,
-        protected string $status = self::IS_INIT
+        protected ArrayObject $items = new ArrayObject(),
+        protected string $status = self::IS_INIT,
+        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
     ) {
         parent::__construct($id);
-        $this->items ??= new ArrayObject();
-        $this->createdAt ??= date('Y-m-d H:i:s');
     }
 
     public static function init(string $id): Order
     {
-        $order = new Order($id, new ArrayObject(), date('Y-m-d H:i:s'));
+        $order = new Order($id);
 
         $order->addEvent(new OrderInitialized($id, [
             'items' => $order->items->getArrayCopy(),
