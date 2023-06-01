@@ -6,7 +6,9 @@ namespace Tests\Domain;
 
 use App\Domain\Events\{OrderInitialized, ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use App\Domain\{Order, Product};
+use App\Domain\Events\OrderPlaced;
 use ArrayObject;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class OrderTest extends TestCase
@@ -136,5 +138,63 @@ class OrderTest extends TestCase
             $this->assertSame($this->product->id, $event->data['productId']);
         }
         $this->sut->removeProductItem($this->product);
+    }
+
+    public function testCannotMarkOrderAsPlacedIfAlreadyPlaced(): void
+    {
+        $this->assertFalse($this->sut->isPlaced());
+
+        $this->sut->addProductItem($this->product);
+        foreach($this->sut->getEvents() as $event) {
+            $this->sut->commitEvent($event);
+        }
+
+        $this->sut->markOrderAsPlaced();
+
+        $this->assertTrue($this->sut->isPlaced());
+
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Order is already placed');
+
+        $this->sut->markOrderAsPlaced();
+    }
+
+    public function testCannotMarkOrderAsPlacedIfNoItems(): void
+    {
+        $this->assertFalse($this->sut->isPlaced());
+
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Order must have at least one item to be placed');
+
+        $this->sut->markOrderAsPlaced();
+
+        $this->assertFalse($this->sut->isPlaced());
+    }
+
+    public function testMarkOrderAsPlaced(): void
+    {
+        $this->assertFalse($this->sut->isPlaced());
+
+        $this->sut->addProductItem($this->product);
+        foreach($this->sut->getEvents() as $event) {
+            $this->sut->commitEvent($event);
+        }
+
+        $this->sut->markOrderAsPlaced();
+
+        $this->assertTrue($this->sut->isPlaced());
+
+        $events = $this->sut->getEvents();
+        $this->assertNotEmpty($events);
+
+        foreach($events as $event) {
+            $this->sut->commitEvent($event);
+            $this->assertInstanceOf(OrderPlaced::class, $event);
+            $this->assertSame($this->orderId, $event->identifier);
+        }
+
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Order is already placed');
+        $this->sut->markOrderAsPlaced();
     }
 }
