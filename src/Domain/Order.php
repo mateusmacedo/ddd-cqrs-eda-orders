@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
+use App\Domain\Events\OrderPlaced;
 use App\Domain\Events\{OrderInitialized};
 use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
-use App\Domain\Events\OrderPlaced;
 use ArrayObject;
 use DateTimeImmutable;
 use Frete\Core\Domain\AggregateRoot;
@@ -31,7 +31,7 @@ final class Order extends AggregateRoot
 
         $order->addEvent(new OrderInitialized($id, [
             'items' => $order->items->getArrayCopy(),
-            'createdAt' => $order->createdAt,
+            'createdAt' => $order->createdAt->format('Y-m-d H:i:s'),
         ]));
 
         return $order;
@@ -49,8 +49,11 @@ final class Order extends AggregateRoot
 
     public function addProductItem(Product $product): void
     {
-        $item = $this->items->offsetGet($product->id);
-        $quantity = $item?->quantity ?? 0;
+        $quantity = 0;
+
+        if ($this->items->offsetExists($product->id)) {
+            $quantity = $this->items->offsetGet($product->id)->quantity;
+        }
 
         $item = new Item($product->id, ++$quantity, $product->price);
         $this->items->offsetSet($product->id, $item);
@@ -69,12 +72,12 @@ final class Order extends AggregateRoot
 
     public function removeProductItem(Product $product): void
     {
-        $item = $this->items->offsetGet($product->id);
-        if (null === $item) {
+        if (!$this->items->offsetExists($product->id)) {
             return;
         }
 
-        $quantity = (int) ($item->quantity - 1);
+        $quantity = (int) $this->items->offsetGet($product->id)->quantity - 1;
+
         if (0 === $quantity) {
             $this->items->offsetUnset($product->id);
         } else {

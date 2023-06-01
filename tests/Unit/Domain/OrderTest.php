@@ -8,6 +8,7 @@ use App\Domain\Events\{OrderInitialized, ProductItemAddedToOrder, ProductItemRem
 use App\Domain\{Order, Product};
 use App\Domain\Events\OrderPlaced;
 use ArrayObject;
+use DateTimeImmutable;
 use DomainException;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +33,7 @@ class OrderTest extends TestCase
             'name' => 'Product 1',
             'description' => 'Product 1 description',
             'price' => 10.00,
-            'createdAt' => date('Y-m-d H:i:s')
+            'createdAt' => new DateTimeImmutable(),
         ]);
     }
 
@@ -60,7 +61,7 @@ class OrderTest extends TestCase
         $this->assertInstanceOf(OrderInitialized::class, $orderInitializedEvent);
         $this->assertSame($this->orderId, $orderInitializedEvent->identifier);
         $this->assertSame([], $orderInitializedEvent->data['items']);
-        $this->assertSame($order->createdAt, $orderInitializedEvent->data['createdAt']);
+        $this->assertSame($order->createdAt->format('Y-m-d H:i:s'), $orderInitializedEvent->data['createdAt']);
     }
 
     public function testCanAddProductOnOrder(): void
