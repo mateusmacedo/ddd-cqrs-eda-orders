@@ -11,10 +11,13 @@ use Frete\Core\Domain\AggregateRoot;
 
 final class Order extends AggregateRoot
 {
+    public const IS_INIT = 'init';
+
     public function __construct(
         string $id,
         public readonly ArrayObject $items,
         public readonly string $createdAt,
+        protected string $status = self::IS_INIT
     ) {
         parent::__construct($id);
         $this->items ??= new ArrayObject();
@@ -31,6 +34,11 @@ final class Order extends AggregateRoot
         ]));
 
         return $order;
+    }
+
+    public function isInitialized(): bool
+    {
+        return self::IS_INIT === $this->status;
     }
 
     public function addProductItem(Product $product): void
@@ -60,7 +68,7 @@ final class Order extends AggregateRoot
             return;
         }
 
-        $quantity = (int)($item->quantity - 1);
+        $quantity = (int) ($item->quantity - 1);
         if (0 === $quantity) {
             $this->items->offsetUnset($product->id);
         } else {
