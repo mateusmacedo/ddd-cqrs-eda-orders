@@ -1,0 +1,70 @@
+{
+    "name": "mateusmacedo/php-plataform-ddd-cqrs-eda-orders",
+    "description": "Code of the presentation about DDD, CQRS and EDA",
+    "type": "library",
+    "keywords": [
+        "ddd",
+        "cqrs",
+        "eda",
+        "meetup"
+    ],
+    "require": {
+        "frete/core": "dev-support/contravariance"
+    },
+    "require-dev": {
+        "fakerphp/faker": "2.x-dev",
+        "friendsofphp/php-cs-fixer": "dev-master",
+        "marcocesarato/php-conventional-changelog": "^1.17",
+        "mockery/mockery": "2.0.x-dev",
+        "phpstan/phpstan": "1.11.x-dev",
+        "phpunit/phpunit": "10.2.x-dev"
+    },
+    "license": "Mit",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mateus Macedo Dos Anjos",
+            "email": "macedodosanjosmateus@gmail.com"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "process-timeout": 0
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "code-analyze": " php -d memory_limit=-1 vendor/bin/phpstan analyze",
+        "code-analyze:report": " php -d memory_limit=-1 vendor/bin/phpstan analyze --error-format=gitlab > ${REPORT_PATH}quality.json || true",
+        "check-style": "vendor/bin/php-cs-fixer fix --diff --verbose --dry-run .",
+        "lint-fix": "vendor/bin/php-cs-fixer fix .",
+        "lint-validation": "vendor/bin/php-cs-fixer fix -v --using-cache no --dry-run --stop-on-violation",
+        "unit-test": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --testdox --path-coverage",
+        "unit-test:unit": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --testsuite=Unit --testdox",
+        "unit-test:integration": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --testsuite=Integration --testdox",
+        "unit-test:coverage": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --coverage-html=coverage --log-junit coverage/logfile.xml --coverage-clover coverage/coverage.xml --testdox",
+        "unit-test:coverage-all": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --coverage-html=coverage --log-junit coverage/logfile.xml --coverage-clover coverage/coverage.xml --testdox --path-coverage",
+        "unit-test:report": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --testdox --coverage-text --coverage-clover=coverage/coverage.xml --log-junit=coverage/logfile.xml",
+        "unit-test:report-all": "XDEBUG_MODE=coverage php -d memory_limit=-1 vendor/bin/phpunit --configuration phpunit.xml --testdox --coverage-text --coverage-clover=coverage/coverage.xml --log-junit=coverage/logfile.xml --path-coverage",
+        "unit-test:debug": "php -d memory_limit=-1 -d display_errors=on -d xdebug.mode=debug -d xdebug.client_host=127.0.0.1 -d xdebug.client_port=9003 -d xdebug.start_with_request=1 vendor/bin/phpunit --configuration phpunit.xml --testdox",
+        "changelog": "conventional-changelog",
+        "release": "conventional-changelog --commit",
+        "release:patch": "conventional-changelog --patch --commit",
+        "release:minor": "conventional-changelog --minor --commit",
+        "release:major": "conventional-changelog --major --commit"
+    }
+}
