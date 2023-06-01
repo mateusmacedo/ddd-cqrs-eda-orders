@@ -7,6 +7,7 @@ namespace Tests\Domain;
 use App\Domain\Events\OrderInitialized;
 use App\Domain\{Order, Product};
 use App\Domain\Events\ProductItemAddedToOrder;
+use App\Domain\Events\ProductItemRemovedFromOrder;
 use ArrayObject;
 use PHPUnit\Framework\TestCase;
 
@@ -114,5 +115,37 @@ class OrderTest extends TestCase
         $this->assertSame($this->product->id, $productAddedToOrderEvent->data['productId']);
         $this->assertSame(2, $productAddedToOrderEvent->data['quantity']);
         $this->assertSame($this->product->price, actual: $productAddedToOrderEvent->data['price']);
+    }
+
+    public function testCanRemoveProductFromOrder(): void
+    {
+        $this->sut->addProductItem($this->product);
+        $this->sut->addProductItem($this->product);
+        foreach($this->sut->getEvents() as $event) {
+            $this->sut->commitEvent($event);
+        }
+
+        $this->sut->removeProductItem($this->product);
+
+        $items = $this->sut->items->getArrayCopy();
+        $this->assertArrayHasKey($this->product->id, $items);
+        $this->assertSame(1, $items[$this->product->id]->quantity);
+
+        $this->sut->removeProductItem($this->product);
+
+        $items = $this->sut->items->getArrayCopy();
+        $this->assertArrayNotHasKey($this->product->id, $items);
+
+        $events = $this->sut->getEvents();
+        $this->assertNotEmpty($events);
+
+        foreach($events as $event) {
+            $this->sut->commitEvent($event);
+
+        $this->assertInstanceOf(ProductItemRemovedFromOrder::class, $event);
+        $this->assertSame($this->orderId, $event->identifier);
+        $this->assertSame($this->product->id, $event->data['productId']);
+        }
+        $this->sut->removeProductItem($this->product);
     }
 }
