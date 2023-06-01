@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Domain;
 
-use App\Domain\Events\OrderInitialized;
+use App\Domain\Events\{OrderInitialized, ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use App\Domain\{Order, Product};
-use App\Domain\Events\ProductItemAddedToOrder;
-use App\Domain\Events\ProductItemRemovedFromOrder;
 use ArrayObject;
 use PHPUnit\Framework\TestCase;
 
@@ -51,6 +49,7 @@ class OrderTest extends TestCase
         $this->assertSame($this->orderId, $order->id);
         $this->assertInstanceOf(ArrayObject::class, $order->items);
         $this->assertNotNull($order->createdAt);
+        $this->assertTrue($order->isInitialized());
     }
 
     public function testOrderInitializedEventIsAdded(): void
@@ -62,6 +61,7 @@ class OrderTest extends TestCase
         $this->assertInstanceOf(ArrayObject::class, $order->items);
         $this->assertNotNull($order->createdAt);
         $this->assertNotEmpty($order->getEvents());
+        $this->assertTrue($order->isInitialized());
 
         $events = $order->getEvents();
         $orderInitializedEvent = array_shift($events);
@@ -142,9 +142,9 @@ class OrderTest extends TestCase
         foreach($events as $event) {
             $this->sut->commitEvent($event);
 
-        $this->assertInstanceOf(ProductItemRemovedFromOrder::class, $event);
-        $this->assertSame($this->orderId, $event->identifier);
-        $this->assertSame($this->product->id, $event->data['productId']);
+            $this->assertInstanceOf(ProductItemRemovedFromOrder::class, $event);
+            $this->assertSame($this->orderId, $event->identifier);
+            $this->assertSame($this->product->id, $event->data['productId']);
         }
         $this->sut->removeProductItem($this->product);
     }
