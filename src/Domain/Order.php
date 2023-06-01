@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use App\Domain\Events\ProductItemAddedToOrder;
 use App\Domain\Events\{OrderInitialized};
+use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use ArrayObject;
 use Frete\Core\Domain\AggregateRoot;
 
@@ -51,5 +51,22 @@ final class Order extends AggregateRoot
                 ]
             )
         );
+    }
+
+    public function removeProductItem(Product $product): void
+    {
+        $item = $this->items->offsetGet($product->id);
+        if (null === $item) {
+            return;
+        }
+
+        $quantity = (int)($item->quantity - 1);
+        if (0 === $quantity) {
+            $this->items->offsetUnset($product->id);
+        } else {
+            $this->items->offsetSet($product->id, new Item($product->id, $quantity, $product->price));
+        }
+
+        $this->addEvent(new ProductItemRemovedFromOrder($this->id, ['productId' => $product->id]));
     }
 }
