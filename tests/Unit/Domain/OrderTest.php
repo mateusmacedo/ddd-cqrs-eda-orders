@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Domain;
 
+use App\Domain\Events\OrderPlaced;
 use App\Domain\Events\{OrderInitialized, ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use App\Domain\{Order, Product};
-use App\Domain\Events\OrderPlaced;
 use ArrayObject;
 use DateTimeImmutable;
 use DomainException;
@@ -23,11 +23,7 @@ class OrderTest extends TestCase
     {
         $this->orderId = '123';
         $this->items = new ArrayObject();
-        $this->sut = Order::init($this->orderId);
-        $events = $this->sut->getEvents();
-        $orderInitializedEvent = array_shift($events);
-        $this->sut->commitEvent($orderInitializedEvent);
-
+        $this->sut = new Order($this->orderId);
         $this->product = new Product(...[
             'id' => '123',
             'name' => 'Product 1',
@@ -35,33 +31,6 @@ class OrderTest extends TestCase
             'price' => 10.00,
             'createdAt' => new DateTimeImmutable(),
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        unset($this->orderId, $this->items, $this->sut, $this->product);
-    }
-
-    public function testOrderCanBeInitialized(): void
-    {
-        $order = Order::init($this->orderId);
-
-        $this->assertInstanceOf(Order::class, $order);
-        $this->assertSame($this->orderId, $order->id);
-        $this->assertSame([], $order->listProductItems());
-        $this->assertNotNull($order->createdAt);
-        $this->assertNotEmpty($order->getEvents());
-        $this->assertTrue($order->isInitialized());
-
-        $events = $order->getEvents();
-        $orderInitializedEvent = array_shift($events);
-
-        $this->assertInstanceOf(OrderInitialized::class, $orderInitializedEvent);
-        $this->assertSame($this->orderId, $orderInitializedEvent->identifier);
-        $this->assertSame([], $orderInitializedEvent->data['items']);
-        $this->assertSame($order->createdAt->format('Y-m-d H:i:s'), $orderInitializedEvent->data['createdAt']);
     }
 
     public function testCanAddProductOnOrder(): void
@@ -113,7 +82,7 @@ class OrderTest extends TestCase
     {
         $this->sut->addProductItem($this->product);
         $this->sut->addProductItem($this->product);
-        foreach($this->sut->getEvents() as $event) {
+        foreach ($this->sut->getEvents() as $event) {
             $this->sut->commitEvent($event);
         }
 
@@ -131,7 +100,7 @@ class OrderTest extends TestCase
         $events = $this->sut->getEvents();
         $this->assertNotEmpty($events);
 
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $this->sut->commitEvent($event);
 
             $this->assertInstanceOf(ProductItemRemovedFromOrder::class, $event);
@@ -146,7 +115,7 @@ class OrderTest extends TestCase
         $this->assertFalse($this->sut->isPlaced());
 
         $this->sut->addProductItem($this->product);
-        foreach($this->sut->getEvents() as $event) {
+        foreach ($this->sut->getEvents() as $event) {
             $this->sut->commitEvent($event);
         }
 
@@ -177,7 +146,7 @@ class OrderTest extends TestCase
         $this->assertFalse($this->sut->isPlaced());
 
         $this->sut->addProductItem($this->product);
-        foreach($this->sut->getEvents() as $event) {
+        foreach ($this->sut->getEvents() as $event) {
             $this->sut->commitEvent($event);
         }
 
@@ -188,7 +157,7 @@ class OrderTest extends TestCase
         $events = $this->sut->getEvents();
         $this->assertNotEmpty($events);
 
-        foreach($events as $event) {
+        foreach ($events as $event) {
             $this->sut->commitEvent($event);
             $this->assertInstanceOf(OrderPlaced::class, $event);
             $this->assertSame($this->orderId, $event->identifier);

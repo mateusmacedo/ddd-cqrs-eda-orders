@@ -9,6 +9,7 @@ use App\Domain\Events\{OrderInitialized};
 use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use ArrayObject;
 use DateTimeImmutable;
+use DomainException;
 use Frete\Core\Domain\AggregateRoot;
 
 final class Order extends AggregateRoot
@@ -23,18 +24,6 @@ final class Order extends AggregateRoot
         public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
     ) {
         parent::__construct($id);
-    }
-
-    public static function init(string $id): Order
-    {
-        $order = new Order($id);
-
-        $order->addEvent(new OrderInitialized($id, [
-            'items' => $order->items->getArrayCopy(),
-            'createdAt' => $order->createdAt->format('Y-m-d H:i:s'),
-        ]));
-
-        return $order;
     }
 
     public function isInitialized(): bool
@@ -90,11 +79,11 @@ final class Order extends AggregateRoot
     public function markOrderAsPlaced(): void
     {
         if ($this->isPlaced()) {
-            throw new \DomainException('Order is already placed');
+            throw new DomainException('Order is already placed');
         }
 
-        if ($this->items->count() === 0) {
-            throw new \DomainException('Order must have at least one item to be placed');
+        if (0 === $this->items->count()) {
+            throw new DomainException('Order must have at least one item to be placed');
         }
 
         $this->status = self::IS_PLACED;
