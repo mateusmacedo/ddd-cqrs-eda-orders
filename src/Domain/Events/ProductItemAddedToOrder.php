@@ -6,6 +6,6 @@ namespace App\Domain\Events;
 
 use Frete\Core\Domain\DomainEvent;
 
-final class ProductItemAddedToOrder extends DomainEvent
+class ProductItemAddedToOrder extends DomainEvent
 {
 }

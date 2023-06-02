@@ -9,7 +9,7 @@ use App\Domain\Events\ProductRegistered;
 use App\Domain\{Product, ProductFactory};
 use PHPUnit\Framework\TestCase;
 
-final class ProductFactoryTest extends TestCase
+class ProductFactoryTest extends TestCase
 {
     private string $productId;
     private string $productName;

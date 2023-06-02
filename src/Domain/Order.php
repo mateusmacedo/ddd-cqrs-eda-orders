@@ -12,7 +12,7 @@ use DateTimeImmutable;
 use DomainException;
 use Frete\Core\Domain\AggregateRoot;
 
-final class Order extends AggregateRoot
+class Order extends AggregateRoot
 {
     public const IS_INIT = 'init';
     public const IS_PLACED = 'placed';
