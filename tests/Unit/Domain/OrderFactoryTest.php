@@ -9,6 +9,7 @@ use App\Domain\Events\OrderCreated;
 use App\Domain\OrderFactory;
 use App\Domain\{Order, Product};
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class OrderFactoryTest extends TestCase
 {
@@ -28,7 +29,7 @@ class OrderFactoryTest extends TestCase
     /**
      * @test
      */
-    public function order_can_be_created(): void
+    public function orderCanBeCreated(): void
     {
         $order = $this->sut->create($this->command);
 
@@ -51,10 +52,10 @@ class OrderFactoryTest extends TestCase
     /**
      * @test
      */
-    public function order_cannot_be_created_with_invalid_data(): void
+    public function orderCannotBeCreatedWithInvalidData(): void
     {
         $this->assertNull($this->sut->create(null));
-        $this->assertNull($this->sut->create(new \stdClass()));
+        $this->assertNull($this->sut->create(new stdClass()));
         $this->assertNull($this->sut->create([]));
         $this->assertNull($this->sut->create(''));
         $this->assertNull($this->sut->create(1));

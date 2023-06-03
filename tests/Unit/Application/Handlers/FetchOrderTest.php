@@ -6,8 +6,7 @@ namespace Tests\Unit\Application\Handlers;
 
 use App\Application\Handlers\FetchOrder;
 use App\Application\Queries\FetchOrder as FetchOrderQuery;
-use App\Domain\Order;
-use App\Domain\OrderRepository;
+use App\Domain\{Order, OrderRepository};
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Domain\Message;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;

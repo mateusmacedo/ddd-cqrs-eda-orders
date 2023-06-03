@@ -2,15 +2,13 @@
 
 declare(strict_types=1);
 
-use App\Domain\ProductRepository;
 use App\Application\Handlers\FetchProduct as Handler;
+use App\Application\Queries\{FetchProduct, FetchProduct as Query};
+use App\Domain\{Product, ProductRepository};
+use Frete\Core\Application\Errors\ApplicationError;
+use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use App\Application\Queries\FetchProduct as Query;
-use App\Domain\Product;
-use App\Application\Queries\FetchProduct;
-use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
-use Frete\Core\Application\Errors\ApplicationError;
 
 class FetchProductTest extends TestCase
 {
@@ -66,7 +64,7 @@ class FetchProductTest extends TestCase
      */
     public function handleResultAsFailureWithInvalidQueryType()
     {
-        $newQuery = new class extends Frete\Core\Application\Query {
+        $newQuery = new class() extends Frete\Core\Application\Query {
         };
         $query = $newQuery;
 

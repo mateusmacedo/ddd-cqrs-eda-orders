@@ -43,7 +43,7 @@ class RegisterProductTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_success_with_product()
+    public function handleResultAsSuccessWithProduct()
     {
         $this->productFactoryMock
             ->expects($this->once())
@@ -69,7 +69,7 @@ class RegisterProductTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_failure_with_application_error()
+    public function handleResultAsFailureWithApplicationError()
     {
         $this->productFactoryMock
             ->expects($this->once())
@@ -86,7 +86,7 @@ class RegisterProductTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_failure_with_repository_error(): void
+    public function handleResultAsFailureWithRepositoryError(): void
     {
         $this->productFactoryMock
             ->expects($this->once())

@@ -8,6 +8,7 @@ use App\Application\Commands\RegisterProduct;
 use App\Domain\Events\ProductRegistered;
 use App\Domain\{Product, ProductFactory};
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class ProductFactoryTest extends TestCase
 {
@@ -36,7 +37,7 @@ class ProductFactoryTest extends TestCase
     /**
      * @test
      */
-    public function product_can_be_created(): void
+    public function productCanBeCreated(): void
     {
         $product = $this->sut->create($this->registerProduct);
 
@@ -72,10 +73,10 @@ class ProductFactoryTest extends TestCase
     /**
      * @test
      */
-    public function product_cannot_be_created_with_invalid_data(): void
+    public function productCannotBeCreatedWithInvalidData(): void
     {
         $this->assertNull($this->sut->create(null));
-        $this->assertNull($this->sut->create(new \stdClass()));
+        $this->assertNull($this->sut->create(new stdClass()));
         $this->assertNull($this->sut->create([]));
         $this->assertNull($this->sut->create(''));
         $this->assertNull($this->sut->create(1));

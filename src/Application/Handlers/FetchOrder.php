@@ -20,7 +20,6 @@ class FetchOrder implements IHandler
     }
 
     /**
-     *
      * @param FetchOrderQuery $query
      *
      * @return Result

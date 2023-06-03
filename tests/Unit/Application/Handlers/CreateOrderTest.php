@@ -6,8 +6,8 @@ namespace Tests\Unit\Application\Handlers;
 
 use App\Application\Commands\CreateOrder as CreateOrderCommand;
 use App\Application\Handlers\CreateOrder as CreateOrderHandler;
-use App\Domain\{OrderFactory, OrderRepository};
 use App\Domain\Order;
+use App\Domain\{OrderFactory, OrderRepository};
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\IDispatcher;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
@@ -43,7 +43,7 @@ class CreateOrderTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_success_with_order()
+    public function handleResultAsSuccessWithOrder()
     {
         $this->orderFactoryMock
             ->expects($this->once())
@@ -69,7 +69,7 @@ class CreateOrderTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_failure_with_application_error()
+    public function handleResultAsFailureWithApplicationError()
     {
         $this->orderFactoryMock
             ->expects($this->once())
@@ -92,7 +92,7 @@ class CreateOrderTest extends TestCase
     /**
      * @test
      */
-    public function handle_result_as_failure_with_repository_error(): void
+    public function handleResultAsFailureWithRepositoryError(): void
     {
         $this->orderFactoryMock
             ->expects($this->once())
