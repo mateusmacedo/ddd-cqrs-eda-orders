@@ -2,39 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain;
+namespace Tests\Unit\Domain;
 
-use App\Domain\Events\OrderInitialized;
+use App\Application\Commands\CreateOrder;
+use App\Domain\Events\OrderCreated;
 use App\Domain\OrderFactory;
 use App\Domain\{Order, Product};
-use ArrayObject;
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 class OrderFactoryTest extends TestCase
 {
     private string $orderId;
-    private ArrayObject $items;
-    private Product $product;
     private OrderFactory $sut;
+    private CreateOrder $command;
 
     protected function setUp(): void
     {
         $this->orderId = '123';
-        $this->items = new ArrayObject();
-        $this->product = new Product(...[
-            'id' => '123',
-            'name' => 'Product 1',
-            'description' => 'Product 1 description',
-            'price' => 10.00,
-            'createdAt' => new DateTimeImmutable(),
-        ]);
+        $this->command = new CreateOrder(
+            $this->orderId,
+        );
         $this->sut = new OrderFactory();
     }
 
-    public function testOrderCanBeCreated(): void
+    /**
+     * @test
+     */
+    public function order_can_be_created(): void
     {
-        $order = $this->sut->create(id: $this->orderId);
+        $order = $this->sut->create($this->command);
 
         $this->assertInstanceOf(Order::class, $order);
         $this->assertSame($this->orderId, $order->id);
@@ -46,9 +42,23 @@ class OrderFactoryTest extends TestCase
         $events = $order->getEvents();
         $orderInitializedEvent = array_shift($events);
 
-        $this->assertInstanceOf(OrderInitialized::class, $orderInitializedEvent);
+        $this->assertInstanceOf(OrderCreated::class, $orderInitializedEvent);
         $this->assertSame($this->orderId, $orderInitializedEvent->identifier);
         $this->assertSame([], $orderInitializedEvent->data['items']);
         $this->assertSame($order->createdAt->format('Y-m-d H:i:s'), $orderInitializedEvent->data['createdAt']);
+    }
+
+    /**
+     * @test
+     */
+    public function order_cannot_be_created_with_invalid_data(): void
+    {
+        $this->assertNull($this->sut->create(null));
+        $this->assertNull($this->sut->create(new \stdClass()));
+        $this->assertNull($this->sut->create([]));
+        $this->assertNull($this->sut->create(''));
+        $this->assertNull($this->sut->create(1));
+        $this->assertNull($this->sut->create(1.0));
+        $this->assertNull($this->sut->create(true));
     }
 }

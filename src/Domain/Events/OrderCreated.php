@@ -6,6 +6,6 @@ namespace App\Domain\Events;
 
 use Frete\Core\Domain\DomainEvent;
 
-class OrderInitialized extends DomainEvent
+class OrderCreated extends DomainEvent
 {
 }

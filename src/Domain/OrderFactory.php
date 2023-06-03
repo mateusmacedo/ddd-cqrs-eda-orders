@@ -4,33 +4,34 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-use App\Domain\Events\OrderInitialized;
+use App\Application\Commands\CreateOrder;
+use App\Domain\Events\OrderCreated;
 use Frete\Core\Domain\AbstractFactory;
 
 class OrderFactory extends AbstractFactory
 {
     /**
-     * @param mixed $data
-     * @param mixed $id
-     *
-     * @return Order
+     * @var Order
      */
+    protected object $item;
+
     public function create(mixed $data = null, mixed $id = null): mixed
     {
-        $this->reset($id);
-        $this->item->addEvent(new OrderInitialized($id, [
-            'items' => $this->item->listProductItems(),
-            'createdAt' => $this->item->createdAt->format('Y-m-d H:i:s'),
-        ]));
+        if ($data instanceof CreateOrder) {
+            $this->reset($data);
+            $this->item->addEvent(new OrderCreated($this->item->id, [
+                'items' => $this->item->listProductItems(),
+                'createdAt' => $this->item->createdAt->format('Y-m-d H:i:s'),
+            ]));
 
-        return $this->item;
+            return $this->item;
+        }
+
+        return null;
     }
 
-    /**
-     * @param string $data
-     */
     protected function reset(mixed $data): void
     {
-        $this->item = new Order($data);
+        $this->item = new Order($data->orderId);
     }
 }

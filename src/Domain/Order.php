@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain;
 
 use App\Domain\Events\OrderPlaced;
-use App\Domain\Events\{OrderInitialized};
+use App\Domain\Events\{OrderCreated};
 use App\Domain\Events\{ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use ArrayObject;
 use DateTimeImmutable;

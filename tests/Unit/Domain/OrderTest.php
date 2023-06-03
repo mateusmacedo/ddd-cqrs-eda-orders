@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain;
+namespace Tests\Unit\Domain;
 
 use App\Domain\Events\OrderPlaced;
-use App\Domain\Events\{OrderInitialized, ProductItemAddedToOrder, ProductItemRemovedFromOrder};
+use App\Domain\Events\{OrderCreated, ProductItemAddedToOrder, ProductItemRemovedFromOrder};
 use App\Domain\{Order, Product};
 use ArrayObject;
 use DateTimeImmutable;
