@@ -33,7 +33,10 @@ class ProductFactoryTest extends TestCase
         $this->sut = new ProductFactory();
     }
 
-    public function testProductCanBeCreated(): void
+    /**
+     * @test
+     */
+    public function product_can_be_created(): void
     {
         $product = $this->sut->create($this->registerProduct);
 
@@ -64,5 +67,19 @@ class ProductFactoryTest extends TestCase
 
         $this->assertArrayHasKey('createdAt', $eventData);
         $this->assertEquals($eventData['createdAt'], $product->createdAt->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * @test
+     */
+    public function product_cannot_be_created_with_invalid_data(): void
+    {
+        $this->assertNull($this->sut->create(null));
+        $this->assertNull($this->sut->create(new \stdClass()));
+        $this->assertNull($this->sut->create([]));
+        $this->assertNull($this->sut->create(''));
+        $this->assertNull($this->sut->create(1));
+        $this->assertNull($this->sut->create(1.0));
+        $this->assertNull($this->sut->create(true));
     }
 }
