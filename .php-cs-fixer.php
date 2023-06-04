@@ -65,7 +65,7 @@ return (new PhpCsFixer\Config())
         ],
     ])->setFinder(
         PhpCsFixer\Finder::create()
-            ->exclude(['bootstrap', 'storage', 'vendor'])
+            ->exclude(['bootstrap', 'storage', 'vendor', 'coverage', 'tests/_output', '.phpunit.cache'])
             ->notName(['_*.php'])
             ->in(__DIR__)
     );

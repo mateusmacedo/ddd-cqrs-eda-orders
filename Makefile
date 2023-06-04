@@ -16,12 +16,6 @@ test-unit:
 test-integration:
 	composer run-script test-integration
 
-test-coverage:
-	composer run-script test-coverage
-
-test-coverage-all:
-	composer run-script test-coverage-all
-
 changelog:
 	composer run-script changelog
 
