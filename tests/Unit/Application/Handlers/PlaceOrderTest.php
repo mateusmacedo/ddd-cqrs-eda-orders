@@ -6,12 +6,10 @@ namespace Tests\Unit\Application\Handlers;
 
 use App\Application\Commands\PlaceOrder as PlaceOrderCommand;
 use App\Application\Handlers\PlaceOrder as PlaceOrderHandler;
-use App\Domain\Order;
-use App\Domain\OrderRepository;
+use App\Domain\{Order, OrderRepository};
 use DomainException;
-use Frete\Core\Application\Command;
 use Frete\Core\Application\Errors\ApplicationError;
-use Frete\Core\Application\IDispatcher;
+use Frete\Core\Application\{Command, IDispatcher};
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -49,8 +47,8 @@ class PlaceOrderTest extends TestCase
     public function shouldReturnFailureWhenOrderRepositoryFails(): void
     {
         $command = $this->getMockBuilder(PlaceOrderCommand::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
         $this->orderRepository->method('get')->willReturn(new RepositoryError('Error'));
 
         $result = $this->handler->handle($command);
@@ -66,8 +64,8 @@ class PlaceOrderTest extends TestCase
     public function shouldReturnFailureWhenOrderIsNotPlaced(): void
     {
         $command = $this->getMockBuilder(PlaceOrderCommand::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
         $order = $this->createStub(Order::class);
         $order->method('markOrderAsPlaced')->willThrowException(new DomainException('Error'));
         $this->orderRepository->method('get')->willReturn($order);
@@ -85,8 +83,8 @@ class PlaceOrderTest extends TestCase
     public function shouldReturnFailureWhenOrderRepositoryFailsToSave(): void
     {
         $command = $this->getMockBuilder(PlaceOrderCommand::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
         $order = $this->createStub(Order::class);
         $this->orderRepository->method('get')->willReturn($order);
         $this->orderRepository->method('save')->willReturn(new RepositoryError('Error'));
@@ -104,8 +102,8 @@ class PlaceOrderTest extends TestCase
     public function shouldReturnSuccessWhenOrderIsPlaced(): void
     {
         $command = $this->getMockBuilder(PlaceOrderCommand::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
         $order = $this->createStub(Order::class);
         $this->orderRepository->method('get')->willReturn($order);
         $this->orderRepository->method('save')->willReturn($order);

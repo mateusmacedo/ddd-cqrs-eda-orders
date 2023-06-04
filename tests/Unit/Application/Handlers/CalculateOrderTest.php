@@ -6,14 +6,13 @@ namespace Tests\Unit\Application\Handlers;
 
 use App\Application\Handlers\CalculateOrder as CalculateOrderHandler;
 use App\Application\Queries\CalculateOrder as CalculateOrderQuery;
-use App\Domain\Order;
-use App\Domain\OrderRepository;
+use App\Domain\{Order, OrderRepository};
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\Query;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use Frete\Core\Shared\Result;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class CalculateOrderTest extends TestCase
 {
@@ -47,12 +46,12 @@ class CalculateOrderTest extends TestCase
     public function shouldReturnErrorWhenOrderRepositoryFails(): void
     {
         $query = $this->getMockBuilder(CalculateOrderQuery::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
 
         $this->orderRepository->expects($this->once())
-        ->method('get')->with($query->orderId)
-        ->willReturn(new RepositoryError('Error'));
+            ->method('get')->with($query->orderId)
+            ->willReturn(new RepositoryError('Error'));
 
         $result = $this->handler->handle($query);
         $error = $result->getError();
@@ -68,16 +67,16 @@ class CalculateOrderTest extends TestCase
     public function shouldReturnSuccessWhenOrderRepositorySucceeds(): void
     {
         $query = $this->getMockBuilder(CalculateOrderQuery::class)
-        ->setConstructorArgs(['1'])
-        ->getMock();
+            ->setConstructorArgs(['1'])
+            ->getMock();
         $order = $this->createMock(Order::class);
         $order->expects($this->once())
-        ->method('calculateTotalPrice')
-        ->willReturn(10.0);
+            ->method('calculateTotalPrice')
+            ->willReturn(10.0);
 
         $this->orderRepository->expects($this->once())
-        ->method('get')->with($query->orderId)
-        ->willReturn($order);
+            ->method('get')->with($query->orderId)
+            ->willReturn($order);
 
         $result = $this->handler->handle($query);
 

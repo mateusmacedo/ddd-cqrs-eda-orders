@@ -29,7 +29,7 @@ class RegisterProduct implements IHandler
      */
     public function handle(Message $command): Result
     {
-        /** @var Product|null */
+        /** @var null|Product */
         $product = $this->productFactory->create($command);
 
         if (!$product) {

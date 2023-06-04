@@ -28,7 +28,7 @@ class CreateOrder implements IHandler
      */
     public function handle(Message $command): Result
     {
-        /** @var Order|null */
+        /** @var null|Order */
         $order = $this->orderFactory->create($command);
 
         if (!$order) {
