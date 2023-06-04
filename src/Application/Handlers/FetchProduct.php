@@ -26,17 +26,17 @@ class FetchProduct implements IHandler
      */
     public function handle(Message $query): Result
     {
-        if ($query instanceof FetchProductQuery) {
-            /** @var Product|RepositoryError */
-            $result = $this->productRepository->get($query->productId);
-
-            if ($result instanceof RepositoryError) {
-                return Result::failure($result);
-            }
-
-            return Result::success($result);
+        if (!$query instanceof FetchProductQuery) {
+            return Result::failure(new ApplicationError('Invalid query type'));
         }
 
-        return Result::failure(new ApplicationError('Invalid query type'));
+        /** @var Product|RepositoryError */
+        $result = $this->productRepository->get($query->productId);
+
+        if ($result instanceof RepositoryError) {
+            return Result::failure($result);
+        }
+
+        return Result::success($result);
     }
 }
