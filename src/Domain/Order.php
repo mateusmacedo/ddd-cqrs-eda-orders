@@ -11,6 +11,7 @@ use ArrayObject;
 use DateTimeImmutable;
 use DomainException;
 use Frete\Core\Domain\AggregateRoot;
+use Frete\Core\Domain\Errors\DomainError;
 
 class Order extends AggregateRoot
 {
@@ -36,7 +37,7 @@ class Order extends AggregateRoot
         return self::IS_PLACED === $this->status;
     }
 
-    public function addProductItem(Product $product): void
+    public function addProductItem(Product $product): DomainError|bool
     {
         $quantity = 0;
 
@@ -57,6 +58,8 @@ class Order extends AggregateRoot
                 ]
             )
         );
+
+        return true;
     }
 
     public function removeProductItem(Product $product): void

@@ -22,7 +22,7 @@ class CreateOrder implements IHandler
     }
 
     /**
-     * @param CreateOrderCommand $mensagem
+     * @param CreateOrderCommand $command
      *
      * @return Result
      */
