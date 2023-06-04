@@ -62,10 +62,10 @@ class Order extends AggregateRoot
         return true;
     }
 
-    public function removeProductItem(Product $product): void
+    public function removeProductItem(Product $product): DomainError|bool
     {
         if (!$this->items->offsetExists($product->id)) {
-            return;
+            return new DomainError('Product not found in order', 1);
         }
 
         $quantity = (int) $this->items->offsetGet($product->id)->quantity - 1;
@@ -77,6 +77,8 @@ class Order extends AggregateRoot
         }
 
         $this->addEvent(new ProductItemRemovedFromOrder($this->id, ['productId' => $product->id]));
+
+        return true;
     }
 
     public function markOrderAsPlaced(): void
