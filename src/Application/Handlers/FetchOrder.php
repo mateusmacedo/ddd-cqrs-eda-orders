@@ -26,16 +26,16 @@ class FetchOrder implements IHandler
      */
     public function handle(Message $query): Result
     {
-        if ($query instanceof FetchOrderQuery) {
-            $result = $this->orderRepository->get($query->orderId);
-
-            if ($result instanceof RepositoryError) {
-                return Result::failure($result);
-            }
-
-            return Result::success($result);
+        if (!$query instanceof FetchOrderQuery) {
+            return Result::failure(new ApplicationError('Invalid query type'));
         }
 
-        return Result::failure(new ApplicationError('Invalid query type'));
+        $result = $this->orderRepository->get($query->orderId);
+
+        if ($result instanceof RepositoryError) {
+            return Result::failure($result);
+        }
+
+        return Result::success($result);
     }
 }
