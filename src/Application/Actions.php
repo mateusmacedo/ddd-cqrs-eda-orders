@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Application\Commands\AddProductToOrder;
-use App\Application\Handlers\{CalculateOrder, FetchOrder, FetchProduct, PlaceOrder, RegisterProduct, RemoveProductFromOrder};
+use App\Application\Commands\{AddProductToOrder, CreateOrder, PlaceOrder, RegisterProduct, RemoveProductFromOrder};
+use App\Application\Queries\{FetchOrder, FetchProduct, CalculateOrder};
 
 enum Actions: string
 {
@@ -16,4 +16,5 @@ enum Actions: string
     case CALCULATE_ORDER = CalculateOrder::class;
     case FETCH_ORDER = FetchOrder::class;
     case FETCH_PRODUCT = FetchProduct::class;
+    case CREATE_ORDER = CreateOrder::class;
 }
