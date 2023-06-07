@@ -30,7 +30,6 @@ class FetchProduct implements IHandler
             return Result::failure(new ApplicationError('Invalid query type'));
         }
 
-        /** @var Product|RepositoryError */
         $result = $this->productRepository->get($query->productId);
 
         if ($result instanceof RepositoryError) {
