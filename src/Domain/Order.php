@@ -37,6 +37,11 @@ class Order extends AggregateRoot
         return self::IS_PLACED === $this->status;
     }
 
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
     public function addProductItem(Product $product): DomainError|bool
     {
         $quantity = 0;
