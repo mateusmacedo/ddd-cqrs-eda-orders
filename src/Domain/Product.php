@@ -14,7 +14,7 @@ class Product extends AggregateRoot
         public readonly string $name,
         public readonly string $description,
         public readonly float $price,
-        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
+        public readonly DateTimeImmutable $registeredAt = new DateTimeImmutable(),
     ) {
         parent::__construct($id);
     }

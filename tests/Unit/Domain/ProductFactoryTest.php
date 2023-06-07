@@ -66,8 +66,8 @@ class ProductFactoryTest extends TestCase
         $this->assertArrayHasKey('price', $eventData);
         $this->assertEquals($eventData['price'], $this->productPrice);
 
-        $this->assertArrayHasKey('createdAt', $eventData);
-        $this->assertEquals($eventData['createdAt'], $product->createdAt->format('Y-m-d H:i:s'));
+        $this->assertArrayHasKey('registeredAt', $eventData);
+        $this->assertEquals($eventData['registeredAt'], $product->registeredAt->format('Y-m-d H:i:s'));
     }
 
     /**

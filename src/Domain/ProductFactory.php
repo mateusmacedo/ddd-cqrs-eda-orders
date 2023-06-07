@@ -24,7 +24,7 @@ class ProductFactory extends AbstractFactory
                 'name' => $this->item->name,
                 'description' => $this->item->description,
                 'price' => $this->item->price,
-                'createdAt' => $this->item->createdAt->format('Y-m-d H:i:s'),
+                'registeredAt' => $this->item->registeredAt->format('Y-m-d H:i:s'),
             ]));
 
             return $this->item;
