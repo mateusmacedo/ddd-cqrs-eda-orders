@@ -10,14 +10,15 @@ use App\Domain\{Product, ProductRepository};
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\{IDispatcher, IHandler};
 use Frete\Core\Domain\{AggregateRoot, IEventStore, Message};
+use Frete\Core\Domain\AbstractFactory;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use Frete\Core\Shared\Result;
 
 class RegisterProduct implements IHandler
 {
     public function __construct(
-        private ProductFactory $productFactory,
-        private ProductRepository $productRepository,
+        private AbstractFactory $factory,
+        private ProductRepository $repository,
         private IDispatcher $dispatcher
     ) {
     }
@@ -30,13 +31,13 @@ class RegisterProduct implements IHandler
     public function handle(Message $command): Result
     {
         /** @var null|Product */
-        $product = $this->productFactory->create($command);
+        $product = $this->factory->create($command);
 
         if (!$product) {
             return Result::failure(new ApplicationError('Product cannot be created'));
         }
 
-        $result = $this->productRepository->save($product);
+        $result = $this->repository->save($product);
 
         if ($result instanceof RepositoryError) {
             return Result::failure($result);
