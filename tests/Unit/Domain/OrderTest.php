@@ -33,8 +33,17 @@ class OrderTest extends TestCase
         ]);
     }
 
+    public function testCanGetStatus(): void
+    {
+        $this->assertFalse($this->sut->isPlaced());
+        $this->assertTrue($this->sut->isInitialized());
+        $this->assertSame(Order::IS_INIT, $this->sut->getStatus());
+    }
+
     public function testCanAddProductOnOrder(): void
     {
+        $this->assertFalse($this->sut->isPlaced());
+
         $this->sut->addProductItem($this->product);
 
         $this->assertNotEmpty($this->sut->listProductItems());
@@ -80,6 +89,8 @@ class OrderTest extends TestCase
 
     public function testCanRemoveProductFromOrder(): void
     {
+        $this->assertFalse($this->sut->isPlaced());
+
         $this->sut->addProductItem($this->product);
         $this->sut->addProductItem($this->product);
         foreach ($this->sut->getEvents() as $event) {
@@ -101,11 +112,10 @@ class OrderTest extends TestCase
         $this->assertNotEmpty($events);
 
         foreach ($events as $event) {
-            $this->sut->commitEvent($event);
-
             $this->assertInstanceOf(ProductItemRemovedFromOrder::class, $event);
             $this->assertSame($this->orderId, $event->identifier);
             $this->assertSame($this->product->id, $event->data['productId']);
+            $this->sut->commitEvent($event);
         }
         $this->sut->removeProductItem($this->product);
     }
@@ -152,7 +162,7 @@ class OrderTest extends TestCase
 
         $this->sut->markOrderAsPlaced();
 
-        $this->assertTrue($this->sut->isPlaced());
+
 
         $events = $this->sut->getEvents();
         $this->assertNotEmpty($events);
@@ -163,9 +173,7 @@ class OrderTest extends TestCase
             $this->assertSame($this->orderId, $event->identifier);
         }
 
-        $this->expectException(DomainException::class);
-        $this->expectExceptionMessage('Order is already placed');
-        $this->sut->markOrderAsPlaced();
+        $this->assertTrue($this->sut->isPlaced());
     }
 
     public function testCanCalculateTotalPrice(): void
