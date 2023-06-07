@@ -15,14 +15,14 @@ use Frete\Core\Domain\Errors\DomainError;
 
 class Order extends AggregateRoot
 {
-    public const IS_INIT = 'init';
+    public const IS_INIT = 'initialized';
     public const IS_PLACED = 'placed';
 
     public function __construct(
         string $id,
-        protected ArrayObject $items = new ArrayObject(),
         protected string $status = self::IS_INIT,
         public readonly DateTimeImmutable $initializedAt = new DateTimeImmutable(),
+        protected ArrayObject $items = new ArrayObject(),
     ) {
         parent::__construct($id);
     }
