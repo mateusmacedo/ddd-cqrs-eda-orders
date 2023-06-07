@@ -905,12 +905,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mateusmacedo/frete-core.git",
-                "reference": "393617a53293373e54eabd8970c6b4da579422f8"
+                "reference": "b8f78f02f6dfb09a9270afa822e2df0cfa828739"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mateusmacedo/frete-core/zipball/393617a53293373e54eabd8970c6b4da579422f8",
-                "reference": "393617a53293373e54eabd8970c6b4da579422f8",
+                "url": "https://api.github.com/repos/mateusmacedo/frete-core/zipball/b8f78f02f6dfb09a9270afa822e2df0cfa828739",
+                "reference": "b8f78f02f6dfb09a9270afa822e2df0cfa828739",
                 "shasum": ""
             },
             "require": {
@@ -949,7 +949,7 @@
                 "issues": "https://github.com/mateusmacedo/frete-core/issues",
                 "source": "https://github.com/mateusmacedo/frete-core/tree/support/contravariance"
             },
-            "time": "2023-06-07T06:09:05+00:00"
+            "time": "2023-06-07T06:17:05+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
