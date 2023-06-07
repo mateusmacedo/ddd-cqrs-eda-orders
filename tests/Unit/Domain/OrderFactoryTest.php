@@ -36,7 +36,7 @@ class OrderFactoryTest extends TestCase
         $this->assertInstanceOf(Order::class, $order);
         $this->assertSame($this->orderId, $order->id);
         $this->assertSame([], $order->listProductItems());
-        $this->assertNotNull($order->createdAt);
+        $this->assertNotNull($order->initializedAt);
         $this->assertNotEmpty($order->getEvents());
         $this->assertTrue($order->isInitialized());
 
@@ -46,7 +46,7 @@ class OrderFactoryTest extends TestCase
         $this->assertInstanceOf(OrderCreated::class, $orderInitializedEvent);
         $this->assertSame($this->orderId, $orderInitializedEvent->identifier);
         $this->assertSame([], $orderInitializedEvent->data['items']);
-        $this->assertSame($order->createdAt->format('Y-m-d H:i:s'), $orderInitializedEvent->data['createdAt']);
+        $this->assertSame($order->initializedAt->format('Y-m-d H:i:s'), $orderInitializedEvent->data['initializedAt']);
     }
 
     /**

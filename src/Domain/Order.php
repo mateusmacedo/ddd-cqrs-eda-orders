@@ -22,7 +22,7 @@ class Order extends AggregateRoot
         string $id,
         protected ArrayObject $items = new ArrayObject(),
         protected string $status = self::IS_INIT,
-        public readonly DateTimeImmutable $createdAt = new DateTimeImmutable(),
+        public readonly DateTimeImmutable $initializedAt = new DateTimeImmutable(),
     ) {
         parent::__construct($id);
     }

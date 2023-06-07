@@ -29,7 +29,7 @@ class OrderTest extends TestCase
             'name' => 'Product 1',
             'description' => 'Product 1 description',
             'price' => 10.00,
-            'createdAt' => new DateTimeImmutable(),
+            'registeredAt' => new DateTimeImmutable(),
         ]);
     }
 

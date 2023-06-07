@@ -21,7 +21,7 @@ class OrderFactory extends AbstractFactory
             $this->reset($data);
             $this->item->addEvent(new OrderCreated($this->item->id, [
                 'items' => $this->item->listProductItems(),
-                'createdAt' => $this->item->createdAt->format('Y-m-d H:i:s'),
+                'initializedAt' => $this->item->initializedAt->format('Y-m-d H:i:s'),
             ]));
 
             return $this->item;
