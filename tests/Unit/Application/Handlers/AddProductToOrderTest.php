@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit\Application\Handlers;
+
 use App\Application\Commands\AddProductToOrder;
 use App\Application\Handlers\AddProductToOrder as AddProductToOrderHandler;
 use App\Domain\{Order, Product};

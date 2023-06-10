@@ -12,6 +12,7 @@ use DateTimeImmutable;
 use DomainException;
 use Frete\Core\Domain\AggregateRoot;
 use Frete\Core\Domain\Errors\DomainError;
+use Frete\Core\Domain\Errors\InvalidDataError;
 
 class Order extends AggregateRoot
 {
@@ -44,6 +45,10 @@ class Order extends AggregateRoot
 
     public function addProductItem(Product $product): DomainError|bool
     {
+        if ($this->isPlaced()) {
+            return new InvalidDataError('Order is already placed', 1);
+        }
+
         $quantity = 0;
 
         if ($this->items->offsetExists($product->id)) {
@@ -69,6 +74,10 @@ class Order extends AggregateRoot
 
     public function removeProductItem(Product $product): DomainError|bool
     {
+        if ($this->isPlaced()) {
+            return new InvalidDataError('Order is already placed', 1);
+        }
+
         if (!$this->items->offsetExists($product->id)) {
             return new DomainError('Product not found in order', 1);
         }

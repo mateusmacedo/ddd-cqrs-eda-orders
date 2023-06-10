@@ -6,7 +6,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Commands\CreateOrder as CreateOrderCommand;
 use App\Domain\{Order, OrderRepository};
-use Frete\Core\Application\Errors\ApplicationError;
+use Frete\Core\Domain\Errors\FactoryError;
 use Frete\Core\Application\{IDispatcher, IHandler};
 use Frete\Core\Domain\AbstractFactory;
 use Frete\Core\Domain\Message;
@@ -33,7 +33,7 @@ class CreateOrder implements IHandler
         $order = $this->orderFactory->create($command);
 
         if (!$order) {
-            return Result::failure(new ApplicationError('Order cannot be created'));
+            return Result::failure(new FactoryError('Order cannot be created'));
         }
 
         $result = $this->orderRepository->save($order);
