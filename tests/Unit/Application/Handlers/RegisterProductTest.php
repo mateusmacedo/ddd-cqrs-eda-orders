@@ -8,8 +8,8 @@ use App\Application\Commands\RegisterProduct as Command;
 use App\Application\Handlers\RegisterProduct as Handler;
 use App\Domain\ProductFactory;
 use App\Domain\{Product, ProductRepository};
-use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\IDispatcher;
+use Frete\Core\Domain\Errors\FactoryError;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -80,7 +80,7 @@ class RegisterProductTest extends TestCase
         $result = $this->sut->handle($this->command);
 
         $this->assertTrue($result->isFailure());
-        $this->assertInstanceOf(ApplicationError::class, $result->getError());
+        $this->assertInstanceOf(FactoryError::class, $result->getError());
     }
 
     /**

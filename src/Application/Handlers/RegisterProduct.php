@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Application\Handlers;
 
 use App\Application\Commands\RegisterProduct as RegisterProductCommand;
-use App\Domain\ProductFactory;
 use App\Domain\{Product, ProductRepository};
-use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\{IDispatcher, IHandler};
 use Frete\Core\Domain\{AggregateRoot, IEventStore, Message};
 use Frete\Core\Domain\AbstractFactory;
+use Frete\Core\Domain\Errors\FactoryError;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use Frete\Core\Shared\Result;
 
@@ -34,7 +33,7 @@ class RegisterProduct implements IHandler
         $product = $this->factory->create($command);
 
         if (!$product) {
-            return Result::failure(new ApplicationError('Product cannot be created'));
+            return Result::failure(new FactoryError('Product cannot be created'));
         }
 
         $result = $this->repository->save($product);
