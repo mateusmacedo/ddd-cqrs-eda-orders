@@ -12,6 +12,7 @@ use App\Domain\{
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\{IDispatcher, IHandler};
 use Frete\Core\Domain\Errors\DomainError;
+use Frete\Core\Domain\Errors\InvalidDataError;
 use Frete\Core\Domain\Message;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use Frete\Core\Shared\Result;
@@ -47,7 +48,7 @@ class AddProductToOrder implements IHandler
         }
 
         $result = $orderOrError->addProductItem($productOrError);
-        if ($result instanceof DomainError) {
+        if ($result instanceof InvalidDataError) {
             return Result::failure($result);
         }
 

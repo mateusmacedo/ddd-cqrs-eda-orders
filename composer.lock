@@ -212,16 +212,16 @@
         },
         {
             "name": "ecotone/ecotone",
-            "version": "1.87.1",
+            "version": "1.88.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecotoneframework/ecotone.git",
-                "reference": "a55201f5a1945826e3f1a5ef36244e3eac67c71d"
+                "reference": "ddf91cef0de063577ef618ce5dc84a5341d3bd3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecotoneframework/ecotone/zipball/a55201f5a1945826e3f1a5ef36244e3eac67c71d",
-                "reference": "a55201f5a1945826e3f1a5ef36244e3eac67c71d",
+                "url": "https://api.github.com/repos/ecotoneframework/ecotone/zipball/ddf91cef0de063577ef618ce5dc84a5341d3bd3c",
+                "reference": "ddf91cef0de063577ef618ce5dc84a5341d3bd3c",
                 "shasum": ""
             },
             "require": {
@@ -232,7 +232,6 @@
             },
             "require-dev": {
                 "behat/behat": "^3.10",
-                "phpbench/phpbench": "^1.2",
                 "phpstan/phpstan": "^1.8",
                 "phpunit/phpunit": "^9.5",
                 "symfony/expression-language": "^6.0"
@@ -240,7 +239,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.87.1-dev"
+                    "dev-main": "1.88.0-dev"
                 },
                 "ecotone": {
                     "repository": "ecotone"
@@ -279,7 +278,7 @@
                 "service-bus"
             ],
             "support": {
-                "source": "https://github.com/ecotoneframework/ecotone/tree/1.87.1"
+                "source": "https://github.com/ecotoneframework/ecotone/tree/1.88.0"
             },
             "funding": [
                 {
@@ -287,24 +286,24 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-05T17:42:03+00:00"
+            "time": "2023-06-09T19:27:28+00:00"
         },
         {
             "name": "ecotone/enqueue",
-            "version": "1.87.1",
+            "version": "1.88.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecotoneframework/enqueue.git",
-                "reference": "c689d3158806455453a9994392a54d71b70dde28"
+                "reference": "fb5138d9ae184307c18bbd653ee1578d977429a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecotoneframework/enqueue/zipball/c689d3158806455453a9994392a54d71b70dde28",
-                "reference": "c689d3158806455453a9994392a54d71b70dde28",
+                "url": "https://api.github.com/repos/ecotoneframework/enqueue/zipball/fb5138d9ae184307c18bbd653ee1578d977429a7",
+                "reference": "fb5138d9ae184307c18bbd653ee1578d977429a7",
                 "shasum": ""
             },
             "require": {
-                "ecotone/ecotone": "~1.87.1",
+                "ecotone/ecotone": "~1.88.0",
                 "enqueue/dsn": "^0.10.4",
                 "queue-interop/queue-interop": "^0.8"
             },
@@ -317,7 +316,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.87.1-dev"
+                    "dev-main": "1.88.0-dev"
                 },
                 "ecotone": {
                     "repository": "enqueue"
@@ -350,7 +349,7 @@
                 "enqueue"
             ],
             "support": {
-                "source": "https://github.com/ecotoneframework/enqueue/tree/1.87.1"
+                "source": "https://github.com/ecotoneframework/enqueue/tree/1.88.0"
             },
             "funding": [
                 {
@@ -358,24 +357,24 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-05T17:42:04+00:00"
+            "time": "2023-06-09T19:27:22+00:00"
         },
         {
             "name": "ecotone/redis",
-            "version": "1.87.1",
+            "version": "1.88.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecotoneframework/redis.git",
-                "reference": "d7f13f1c8ec0b401d47f69ab164c0387ba4f387e"
+                "reference": "295a6f31ca14a202af1bd5fabaf7b223875be84f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecotoneframework/redis/zipball/d7f13f1c8ec0b401d47f69ab164c0387ba4f387e",
-                "reference": "d7f13f1c8ec0b401d47f69ab164c0387ba4f387e",
+                "url": "https://api.github.com/repos/ecotoneframework/redis/zipball/295a6f31ca14a202af1bd5fabaf7b223875be84f",
+                "reference": "295a6f31ca14a202af1bd5fabaf7b223875be84f",
                 "shasum": ""
             },
             "require": {
-                "ecotone/enqueue": "~1.87.1",
+                "ecotone/enqueue": "~1.88.0",
                 "enqueue/redis": "^0.10.9"
             },
             "require-dev": {
@@ -388,7 +387,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.87.1-dev"
+                    "dev-main": "1.88.0-dev"
                 },
                 "ecotone": {
                     "repository": "redis"
@@ -427,7 +426,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ecotoneframework/redis/issues",
-                "source": "https://github.com/ecotoneframework/redis/tree/1.87.1"
+                "source": "https://github.com/ecotoneframework/redis/tree/1.88.0"
             },
             "funding": [
                 {
@@ -435,25 +434,25 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-05T17:42:02+00:00"
+            "time": "2023-06-09T19:27:24+00:00"
         },
         {
             "name": "ecotone/sqs",
-            "version": "1.87.1",
+            "version": "1.88.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ecotoneframework/sqs.git",
-                "reference": "4894546901c0a0fb3aae8800888b657ef9f1e765"
+                "reference": "108d91cf41ad95c253543c4c9b4518c3abd31675"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ecotoneframework/sqs/zipball/4894546901c0a0fb3aae8800888b657ef9f1e765",
-                "reference": "4894546901c0a0fb3aae8800888b657ef9f1e765",
+                "url": "https://api.github.com/repos/ecotoneframework/sqs/zipball/108d91cf41ad95c253543c4c9b4518c3abd31675",
+                "reference": "108d91cf41ad95c253543c4c9b4518c3abd31675",
                 "shasum": ""
             },
             "require": {
                 "aws/aws-sdk-php": "<=3.269.5",
-                "ecotone/enqueue": "~1.87.1",
+                "ecotone/enqueue": "~1.88.0",
                 "enqueue/sqs": "^0.10.15"
             },
             "require-dev": {
@@ -465,7 +464,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "1.87.1-dev"
+                    "dev-main": "1.88.0-dev"
                 },
                 "ecotone": {
                     "repository": "sqs"
@@ -498,7 +497,7 @@
                 "sqs"
             ],
             "support": {
-                "source": "https://github.com/ecotoneframework/sqs/tree/1.87.1"
+                "source": "https://github.com/ecotoneframework/sqs/tree/1.88.0"
             },
             "funding": [
                 {
@@ -506,7 +505,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-05T17:42:04+00:00"
+            "time": "2023-06-09T19:27:23+00:00"
         },
         {
             "name": "enqueue/dsn",
@@ -905,12 +904,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mateusmacedo/frete-core.git",
-                "reference": "b8f78f02f6dfb09a9270afa822e2df0cfa828739"
+                "reference": "64c0185b8fef7ba1b2b1360f154b9230410bce7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mateusmacedo/frete-core/zipball/b8f78f02f6dfb09a9270afa822e2df0cfa828739",
-                "reference": "b8f78f02f6dfb09a9270afa822e2df0cfa828739",
+                "url": "https://api.github.com/repos/mateusmacedo/frete-core/zipball/64c0185b8fef7ba1b2b1360f154b9230410bce7c",
+                "reference": "64c0185b8fef7ba1b2b1360f154b9230410bce7c",
                 "shasum": ""
             },
             "require": {
@@ -949,7 +948,7 @@
                 "issues": "https://github.com/mateusmacedo/frete-core/issues",
                 "source": "https://github.com/mateusmacedo/frete-core/tree/support/contravariance"
             },
-            "time": "2023-06-07T06:17:05+00:00"
+            "time": "2023-06-10T02:48:04+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",
@@ -2868,12 +2867,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "d86065f697daad375c0471bbf012d0cbcd0c48d0"
+                "reference": "aea110f6446f1ca6437e900266fadc6deac143f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/d86065f697daad375c0471bbf012d0cbcd0c48d0",
-                "reference": "d86065f697daad375c0471bbf012d0cbcd0c48d0",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/aea110f6446f1ca6437e900266fadc6deac143f4",
+                "reference": "aea110f6446f1ca6437e900266fadc6deac143f4",
                 "shasum": ""
             },
             "require": {
@@ -2957,7 +2956,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-06-07T00:11:21+00:00"
+            "time": "2023-06-09T21:08:31+00:00"
         },
         {
             "name": "marcocesarato/php-conventional-changelog",
@@ -3347,12 +3346,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b3e4415a09bba406259776accf6b8b948f9c4bc9"
+                "reference": "613c57c741bcdb685ef44a6fab85efaae35bf72d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b3e4415a09bba406259776accf6b8b948f9c4bc9",
-                "reference": "b3e4415a09bba406259776accf6b8b948f9c4bc9",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/613c57c741bcdb685ef44a6fab85efaae35bf72d",
+                "reference": "613c57c741bcdb685ef44a6fab85efaae35bf72d",
                 "shasum": ""
             },
             "require": {
@@ -3402,7 +3401,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-06-06T16:33:09+00:00"
+            "time": "2023-06-09T16:13:46+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

@@ -11,6 +11,8 @@ use App\Domain\{OrderRepository, ProductRepository};
 use Frete\Core\Application\Errors\ApplicationError;
 use Frete\Core\Application\{Command, IDispatcher};
 use Frete\Core\Domain\Errors\DomainError;
+use Frete\Core\Domain\Errors\FactoryError;
+use Frete\Core\Domain\Errors\InvalidDataError;
 use Frete\Core\Infrastructure\Database\Errors\RepositoryError;
 use Frete\Core\Shared\Result;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -120,7 +122,7 @@ class AddProductToOrderHandlerTest extends TestCase
         $this->order->expects($this->once())
             ->method('addProductItem')
             ->with($this->product)
-            ->willReturn(new DomainError('Error', 1));
+            ->willReturn(new InvalidDataError('Error', 1));
 
         $this->orderRepository->expects($this->never())->method('save');
 
@@ -131,7 +133,7 @@ class AddProductToOrderHandlerTest extends TestCase
 
         $this->assertInstanceOf(Result::class, $result);
         $this->assertTrue($result->isFailure());
-        $this->assertInstanceOf(DomainError::class, $error);
+        $this->assertInstanceOf(InvalidDataError::class, $error);
     }
 
     /**
